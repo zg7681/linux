@@ -19,10 +19,13 @@ jobs:
     - name: Build
       run: ./.ci-build.sh
       shell: alpine.sh {0}
+    - name: 查找镜像位置 (Debug)
+      run: find . -name "Image*" && find . -name "*.dtb"
+      shell: alpine.sh {0}
     - name: Upload Kernel Artifacts
       uses: actions/upload-artifact@v4
       with:
         name: kernel-${{ matrix.arch }}-${{ matrix.compiler }}
         path: |
-          out/arch/${{ matrix.arch }}/boot/Image*
-          out/arch/${{ matrix.arch }}/boot/dts/qcom/*.dtb
+          **/arch/${{ matrix.arch }}/boot/Image*
+          **/arch/${{ matrix.arch }}/boot/dts/qcom/*.dtb
